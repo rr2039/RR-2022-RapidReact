@@ -11,6 +11,11 @@ import frc.robot.commands.DriveTank;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShooterDown;
+import frc.robot.commands.ShooterLeft;
+import frc.robot.commands.ShooterOn;
+import frc.robot.commands.ShooterRight;
+import frc.robot.commands.ShooterTurnStop;
+import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterUp;
 import frc.robot.subsystems.DrivetrainSparkMax;
 import frc.robot.subsystems.DrivetrainTalon;
@@ -20,6 +25,7 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.OI; // File for joystick commands
 
 /**
@@ -61,6 +67,16 @@ public class RobotContainer {
     B1.whenPressed(new ShooterUp(m_shooter));
     Button B2 = new JoystickButton(driverController, 2);
     B2.whenPressed(new ShooterDown(m_shooter));
+    Button B5 = new JoystickButton(driverController, 5);
+    B5.whenPressed(new ShooterOn(m_shooter));
+    Button B6 = new JoystickButton(driverController, 6);
+    B6.whenPressed(new ShooterOff(m_shooter));
+    Button DpadLeft = new POVButton(driverController, 270);
+    DpadLeft.whileHeld(new ShooterLeft(m_shooter));
+    DpadLeft.whenReleased(new ShooterTurnStop(m_shooter));
+    Button DpadRight = new POVButton(driverController, 90);
+    DpadRight.whileHeld(new ShooterRight(m_shooter));
+    DpadRight.whenReleased(new ShooterTurnStop(m_shooter));
   }
 
   /**

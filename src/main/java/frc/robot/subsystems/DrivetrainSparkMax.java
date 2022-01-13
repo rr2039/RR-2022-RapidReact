@@ -29,6 +29,7 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
 
     leftSpark2.follow(leftSpark1);
     rightSpark2.follow(rightSpark1);
+    rightSpark1.setInverted(true);
 
     differentialDrive = new DifferentialDrive(leftSpark1, rightSpark1);
   }
