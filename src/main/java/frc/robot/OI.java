@@ -15,7 +15,8 @@ public class OI {
 
    Button D1 = new JoystickButton(driverController, 1);
 
-   public OI() {
+   public OI(RobotContainer robotContainer) {
+    
        //D1.whenPressed(new ShooterUp());
    }
 }
