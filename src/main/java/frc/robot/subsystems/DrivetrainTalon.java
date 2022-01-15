@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,9 +20,6 @@ public class DrivetrainTalon extends SubsystemBase implements Drivetrain {
   WPI_TalonSRX rightTalon1 = null;
   WPI_TalonSRX rightTalon2 = null;
 
-  SpeedControllerGroup leftMotors = null;
-  SpeedControllerGroup rightMotors = null;
-
   DifferentialDrive differentialDrive = null;
 
   public DrivetrainTalon() {
@@ -33,10 +29,10 @@ public class DrivetrainTalon extends SubsystemBase implements Drivetrain {
     rightTalon1 = new WPI_TalonSRX(Constants.DRIVETRAIN_RIGHT_FRONT);
     rightTalon2 = new WPI_TalonSRX(Constants.DRIVETRAIN_RIGHT_BACK);
 
-    leftMotors = new SpeedControllerGroup(leftTalon1, leftTalon2);
-    rightMotors = new SpeedControllerGroup(rightTalon1, rightTalon2);
+    leftTalon2.follow(leftTalon1);
+    rightTalon2.follow(rightTalon1);
 
-    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+    differentialDrive = new DifferentialDrive(leftTalon1, rightTalon1);
   }
 
   public void arcadeDrive(double moveSpeed, double rotateSpeed) {
