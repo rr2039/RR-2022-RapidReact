@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class Shooter extends SubsystemBase {
   WPI_TalonSRX rightShooter = null;
@@ -21,7 +22,7 @@ public class Shooter extends SubsystemBase {
     rightShooter = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_TALON);
     leftShooter = new WPI_TalonSRX(Constants.SHOOTER_LEFT_TALON);
     turretMotor = new WPI_TalonSRX(Constants.SHOOTER_TURRET_TALON);
-    turretSolenoid = new Solenoid(Constants.SHOOTER_SOLENOID);
+    turretSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SHOOTER_SOLENOID);
   }
 
   public void turnOnShooter() {
@@ -35,11 +36,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void turnTurretRight() {
-    turretMotor.set(ControlMode.PercentOutput, 1.0);
+    turretMotor.set(ControlMode.PercentOutput, 0.1);
   }
 
   public void turnTurretLeft() {
-    turretMotor.set(ControlMode.PercentOutput, -1.0);
+    turretMotor.set(ControlMode.PercentOutput, -0.1);
   }
 
   public void stopTurretSpin() {

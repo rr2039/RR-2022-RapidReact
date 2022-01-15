@@ -23,7 +23,7 @@ public final class Constants {
   public static final int SHOOTER_TURRET_TALON = 5;
 
   // Solenoids
-  public static final int SHOOTER_SOLENOID = 10;
+  public static final int SHOOTER_SOLENOID = 0;
 
   // Joysticks
   public static final int DRIVER_CONTROLLER = 0;
