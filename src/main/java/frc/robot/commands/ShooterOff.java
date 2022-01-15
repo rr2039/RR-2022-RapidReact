@@ -9,11 +9,12 @@ import frc.robot.subsystems.Shooter;
 
 public class ShooterOff extends CommandBase {
   private Shooter shooter = null; 
+  
   /** Creates a new ShooterOff. */
   public ShooterOff(Shooter m_shooter) {
     shooter = m_shooter;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.

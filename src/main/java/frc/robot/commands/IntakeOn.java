@@ -9,11 +9,12 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeOn extends CommandBase {
   private Intake intake = null;
+  
   /** Creates a new IntakeOn. */
   public IntakeOn(Intake m_intake) {
     intake = m_intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_intake);
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.

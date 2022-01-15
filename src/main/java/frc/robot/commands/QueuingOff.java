@@ -9,11 +9,12 @@ import frc.robot.subsystems.Queuing;
 
 public class QueuingOff extends CommandBase {
   private Queuing queuing = null;
+  
   /** Creates a new QueuingOff. */
   public QueuingOff(Queuing m_queuing) {
     queuing = m_queuing;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_queuing);
+    addRequirements(queuing);
   }
 
   // Called when the command is initially scheduled.

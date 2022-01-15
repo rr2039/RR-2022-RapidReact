@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
+
   private TalonSRX intakeArm = null;
   private TalonSRX intakeEnd = null;
   private DoubleSolenoid intakeSolenoid = null;
+
   /** Creates a new Intake. */
   public Intake() {
     intakeArm = new TalonSRX(Constants.INTAKE_ARM_TALON);
@@ -41,7 +43,6 @@ public class Intake extends SubsystemBase {
   public void intakeDown() {
     intakeSolenoid.set(Value.kReverse);
   }
-
 
   @Override
   public void periodic() {

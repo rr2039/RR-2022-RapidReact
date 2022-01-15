@@ -13,7 +13,7 @@ public class IntakeOff extends CommandBase {
   public IntakeOff(Intake m_intake) {
     intake = m_intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_intake);
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.

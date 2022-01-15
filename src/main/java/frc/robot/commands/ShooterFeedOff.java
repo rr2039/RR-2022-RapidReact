@@ -9,11 +9,12 @@ import frc.robot.subsystems.Queuing;
 
 public class ShooterFeedOff extends CommandBase {
   private Queuing queuing = null;
+  
   /** Creates a new ShooterFeedOff. */
   public ShooterFeedOff(Queuing m_queuing) {
     queuing = m_queuing;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_queuing);
+    addRequirements(queuing);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +24,7 @@ public class ShooterFeedOff extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    queuing.shooterFeedOff();
+    queuing.turnShooterFeedOff();
   }
 
   // Called once the command ends or is interrupted.

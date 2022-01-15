@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTank;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeDown;
+import frc.robot.commands.IntakeOff;
+import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.QueuingOff;
 import frc.robot.commands.QueuingOn;
@@ -69,6 +72,7 @@ public class RobotContainer {
   public void startup() {
     new ShooterDown(m_shooter);
   }
+  
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -90,7 +94,11 @@ public class RobotContainer {
     B5.whenPressed(new IntakeDown(m_intake));
     Button B6 = new JoystickButton(driverController, 6);
     B6.whenPressed(new IntakeUp(m_intake));
-    
+
+    AxisButton rightTrigger = new AxisButton(driverController, 4, 0.1, 0);
+    rightTrigger.whenPressed(new IntakeOn(m_intake));
+    rightTrigger.whenReleased(new IntakeOff(m_intake));
+
     Button DpadLeft = new POVButton(driverController, 270);
     DpadLeft.whileHeld(new ShooterLeft(m_shooter));
     DpadLeft.whenReleased(new ShooterStop(m_shooter));
@@ -101,7 +109,6 @@ public class RobotContainer {
     DpadUp.whenPressed(new ShooterUp(m_shooter));
     Button DpadDown = new POVButton(driverController, 180);
     DpadDown.whenPressed(new ShooterDown(m_shooter));
-    
   }
 
   /**

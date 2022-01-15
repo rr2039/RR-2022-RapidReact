@@ -17,7 +17,6 @@ public class Shooter extends SubsystemBase {
   WPI_TalonSRX leftShooter = null;
   WPI_TalonSRX turretMotor = null;
   DoubleSolenoid turretSolenoid = null;
-  
 
   /** Creates a new Shooter. */
   public Shooter() {

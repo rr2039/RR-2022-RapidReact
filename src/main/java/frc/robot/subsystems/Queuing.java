@@ -6,13 +6,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Queuing extends SubsystemBase {
+
   private TalonSRX shooterFeed = null;
   private TalonSRX queuing = null;
+
   /** Creates a new Queuing. */
   public Queuing() {
     shooterFeed = new TalonSRX(Constants.SHOOTER_FEED_TALON);
@@ -31,12 +32,12 @@ public class Queuing extends SubsystemBase {
     queuing.set(ControlMode.PercentOutput, moveSpeed);
   }
 
-  public void shooterFeedOn() {
+  public void turnShooterFeedOn() {
     shooterFeed.set(ControlMode.PercentOutput, 1.0);
     turnQueuingOn();
   }
 
-  public void shooterFeedOff() {
+  public void turnShooterFeedOff() {
     shooterFeed.set(ControlMode.PercentOutput, 0.0);
     turnQueuingOff();
   }
