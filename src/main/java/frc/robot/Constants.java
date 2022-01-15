@@ -21,9 +21,16 @@ public final class Constants {
   public static final int SHOOTER_RIGHT_TALON = 8;
   public static final int SHOOTER_LEFT_TALON = 7;
   public static final int SHOOTER_TURRET_TALON = 5;
+  public static final int SHOOTER_FEED_TALON = 3; // Shooter Feed
+  public static final int QUEUING_TALON = 6; // Queuing
+  public static final int INTAKE_ARM_TALON = 1;
+  public static final int INTAKE_END_TALON = 4;
 
   // Solenoids
-  public static final int SHOOTER_SOLENOID = 0;
+  public static final int SHOOTER_SOLENOID0 = 0;
+  public static final int SHOOTER_SOLENOID3 = 1;
+  public static final int INTAKE_SOLENOID1 = 2;
+  public static final int INTAKE_SOLENOID2 = 3;
 
   // Joysticks
   public static final int DRIVER_CONTROLLER = 0;
