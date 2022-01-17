@@ -6,15 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Queuing;
 
 public class IntakeOn extends CommandBase {
   private Intake intake = null;
-  
+  private Queuing queuing = null;
+
   /** Creates a new IntakeOn. */
-  public IntakeOn(Intake m_intake) {
+  public IntakeOn(Intake m_intake, Queuing m_queuing) {
     intake = m_intake;
+    queuing = m_queuing;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(intake, queuing);
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +28,7 @@ public class IntakeOn extends CommandBase {
   @Override
   public void execute() {
     intake.intakeOn();
+    queuing.turnQueuingOn();
   }
 
   // Called once the command ends or is interrupted.

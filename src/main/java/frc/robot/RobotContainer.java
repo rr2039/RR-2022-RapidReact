@@ -7,19 +7,20 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTank;
 import frc.robot.commands.DriveArcade;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeDown;
 import frc.robot.commands.IntakeOff;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.IntakeUp;
 import frc.robot.commands.QueuingOff;
 import frc.robot.commands.QueuingOn;
+import frc.robot.commands.ResetTurretPosition;
 import frc.robot.commands.ShooterDown;
 import frc.robot.commands.ShooterFeedOff;
 import frc.robot.commands.ShooterFeedOn;
@@ -32,7 +33,6 @@ import frc.robot.commands.ShooterUp;
 import frc.robot.subsystems.DrivetrainSparkMax;
 import frc.robot.subsystems.DrivetrainTalon;
 import frc.robot.interfaces.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Queuing;
 import frc.robot.subsystems.Shooter;
@@ -52,10 +52,6 @@ public class RobotContainer {
   private final Queuing m_queuing = new Queuing();
   private final Intake m_intake = new Intake();
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
   // Controller setup
   public static Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
   
@@ -66,13 +62,14 @@ public class RobotContainer {
 
     // Set default commands on subsystems
     m_drivetrain.setDefaultCommand(new DriveArcade(m_drivetrain));
-    
+    SmartDashboard.putData("ResetTurret", new ResetTurretPosition(m_shooter));
   }
 
   public void startup() {
     new ShooterDown(m_shooter);
+    new ShooterStop(m_shooter);
   }
-  
+
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -95,9 +92,9 @@ public class RobotContainer {
     Button B6 = new JoystickButton(driverController, 6);
     B6.whenPressed(new IntakeUp(m_intake));
 
-    AxisButton rightTrigger = new AxisButton(driverController, 4, 0.1, 0);
-    rightTrigger.whenPressed(new IntakeOn(m_intake));
-    rightTrigger.whenReleased(new IntakeOff(m_intake));
+    AxisButton rightTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    rightTrigger.whenPressed(new IntakeOn(m_intake, m_queuing));
+    rightTrigger.whenReleased(new IntakeOff(m_intake, m_queuing));
 
     Button DpadLeft = new POVButton(driverController, 270);
     DpadLeft.whileHeld(new ShooterLeft(m_shooter));
@@ -118,6 +115,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new ShooterDown(m_shooter);
   }
 }

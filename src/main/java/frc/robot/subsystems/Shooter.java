@@ -5,11 +5,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class Shooter extends SubsystemBase {
@@ -23,7 +25,16 @@ public class Shooter extends SubsystemBase {
     rightShooter = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_TALON);
     leftShooter = new WPI_TalonSRX(Constants.SHOOTER_LEFT_TALON);
     turretMotor = new WPI_TalonSRX(Constants.SHOOTER_TURRET_TALON);
+    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     turretSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SHOOTER_SOLENOID0, Constants.SHOOTER_SOLENOID3);
+  }
+
+  public double getTurretPosition() {
+    return turretMotor.getSelectedSensorPosition();
+  }
+
+  public void resetTurretPosition() {
+    turretMotor.setSelectedSensorPosition(0.0);
   }
 
   public void turnOnShooter() {
@@ -37,11 +48,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void turnTurretRight() {
-    turretMotor.set(ControlMode.PercentOutput, 0.25);
+    turretMotor.set(ControlMode.PercentOutput, 0.3);
   }
 
   public void turnTurretLeft() {
-    turretMotor.set(ControlMode.PercentOutput, -0.25);
+    turretMotor.set(ControlMode.PercentOutput, -0.3);
   }
 
   public void stopTurretSpin() {
@@ -59,5 +70,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Shooter Position", getTurretPosition());
+    SmartDashboard.putNumber("Shooter Output", turretMotor.getMotorOutputPercent());
   }
-}
+} 
