@@ -2,19 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Queuing;
 
-public class ShooterFeedOff extends CommandBase {
+public class IntakeOn extends CommandBase {
+  private Intake intake = null;
   private Queuing queuing = null;
   
-  /** Creates a new ShooterFeedOff. */
-  public ShooterFeedOff(Queuing m_queuing) {
+  /** Creates a new IntakeOn. */
+  public IntakeOn(Intake m_intake, Queuing m_queuing) {
+    intake = m_intake;
     queuing = m_queuing;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(queuing);
+    addRequirements(intake, queuing);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +27,8 @@ public class ShooterFeedOff extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    queuing.turnShooterFeedOff();
+    intake.intakeOn();
+    queuing.turnQueuingOn();
   }
 
   // Called once the command ends or is interrupted.

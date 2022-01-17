@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Queuing;
+import frc.robot.subsystems.Intake;
 
-public class QueuingOn extends CommandBase {
-  private Queuing queuing = null;
+public class IntakeUp extends CommandBase {
+  private Intake intake = null;
   
-  /** Creates a new QueuingOn. */
-  public QueuingOn(Queuing m_queuing) {
-    queuing = m_queuing;
+  /** Creates a new IntakeUp. */
+  public IntakeUp(Intake m_intake) {
+    intake = m_intake;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(queuing);
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +24,7 @@ public class QueuingOn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    queuing.turnQueuingOn();
+    intake.intakeUp();
   }
 
   // Called once the command ends or is interrupted.

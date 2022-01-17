@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class ShooterDown extends CommandBase {
-  private Shooter shooter = null;
+public class ShooterOff extends CommandBase {
+  private Shooter shooter = null; 
   
-  /** Creates a new ShooterDown. */
-  public ShooterDown(Shooter m_shooter) {
+  /** Creates a new ShooterOff. */
+  public ShooterOff(Shooter m_shooter) {
     shooter = m_shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -24,7 +24,7 @@ public class ShooterDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.turretDown();
+    shooter.turnOffShooter();
   }
 
   // Called once the command ends or is interrupted.
