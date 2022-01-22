@@ -13,6 +13,14 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  // General Constants
+  public static final int DRIVETRAIN_GEARBOX_RATIO = 0;
+  public static final double SHOOTER_CONVERSION_FACTOR = (4096/600);
+
+  public static final int GYRO_PORT = 0;
+  public static final double GYRO_kVoltsPerDegreePerSecond = 0.0128;
+  
   // Motor Controllers
   public static final int DRIVETRAIN_LEFT_FRONT = 40;
   public static final int DRIVETRAIN_LEFT_BACK = 30;

@@ -40,7 +40,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_robotContainer.startup();
 
     // init Telemetry for Driver Station
     m_telemetry = new Telemetry();
@@ -51,7 +50,7 @@ public class Robot extends TimedRobot {
       UsbCamera camera = cameraServer.startAutomaticCapture();
       camera.setResolution(640, 480);
 
-      CvSink cvSink = cameraServer.getVideo();
+      /*CvSink cvSink = cameraServer.getVideo();
       CvSource outputStream = cameraServer.putVideo("Blur", 640, 480);
 
       Mat source = new Mat();
@@ -63,7 +62,7 @@ public class Robot extends TimedRobot {
         }
         Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
         outputStream.putFrame(output);
-      }
+      }*/
     }).start();
   }
 
@@ -118,7 +117,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.startup();
   }
 
   /** This function is called periodically during operator control. */

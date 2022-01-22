@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.interfaces.Drivetrain;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax.ControlType;
 
 /** Add your docs here. */
 public class DrivetrainTalon extends SubsystemBase implements Drivetrain {
@@ -42,5 +43,47 @@ public class DrivetrainTalon extends SubsystemBase implements Drivetrain {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  @Override
+  public double encoderToDistanceInch(double rotations) {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void resetEncoders() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void setPID(double p, double i, double d, double Iz) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void setPIDReference(double leftReference, double rightReference, ControlType controlType) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public double getLeftEnc() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public double getRightEnc() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void setMotors(double left, double right) {
+    // TODO Auto-generated method stub
+    
   }
 }
