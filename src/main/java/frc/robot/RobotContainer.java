@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.autonomous.Autonomous1;
 import frc.robot.commands.autonomous.Autonomous2;
 import frc.robot.commands.autonomous.Autonomous3;
+import frc.robot.commands.autonomous.IntakeAndShoot;
 import frc.robot.commands.drivetrain.DriveArcade;
 import frc.robot.commands.intake.IntakeDown;
 import frc.robot.commands.intake.IntakeOff;
@@ -72,6 +73,7 @@ public class RobotContainer {
     auto_chooser.setDefaultOption("Auto 1", new Autonomous1(m_drivetrain, m_shooter));
     auto_chooser.addOption("Auto 2", new Autonomous2(m_drivetrain, m_shooter));
     auto_chooser.addOption("Auto 3", new Autonomous3(m_drivetrain, m_intake, m_shooter, m_queuing));
+    auto_chooser.addOption("IntakeAndShoot", new IntakeAndShoot(m_intake, m_queuing, m_shooter, m_drivetrain));
     SmartDashboard.putData(auto_chooser);
 
     SmartDashboard.putData("ResetTurret", new ResetTurretPosition(m_shooter));
