@@ -40,13 +40,11 @@ public class IntakeAndShoot extends SequentialCommandGroup {
         new DriveDistance(m_drivetrain, Preferences.getDouble("Distance", -18)),
         new ShooterFeedOn(m_queuing)
       ),
-      new WaitCommand(3.0),
+      new WaitCommand(2.0),
       new SetShooterSpeed(m_shooter, 1),
       new WaitCommand(3.0),
       new ShooterOff(m_shooter),
       new ShooterFeedOff(m_queuing)
     );
-
-  
   }
 }
