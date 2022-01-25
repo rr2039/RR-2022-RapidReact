@@ -12,7 +12,7 @@ public class QueuingOff extends CommandBase {
   
   /** Creates a new QueuingOff. */
   public QueuingOff(Queuing m_queuing) {
-    queuing = m_queuing;
+    queuing = m_queuing; 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(queuing);
   }
