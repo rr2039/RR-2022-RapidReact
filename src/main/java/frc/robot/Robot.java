@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
     m_telemetry = new Telemetry();
 
     // Vision testing
-    new Thread(() -> {
+    /*new Thread(() -> {
       CameraServer cameraServer = CameraServer.getInstance();
       UsbCamera camera = cameraServer.startAutomaticCapture();
       camera.setResolution(640, 480);
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
         Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
         outputStream.putFrame(output);
       }*/
-    }).start();
+    //}).start();
   }
 
   /**

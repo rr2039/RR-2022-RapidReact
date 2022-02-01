@@ -2,6 +2,11 @@ import cv2
 import numpy
 import math
 from enum import Enum
+import json
+import time
+
+from cscore import CameraServer
+from networktables import NetworkTables
 
 class GripPipeline:
     """
@@ -140,6 +145,66 @@ class GripPipeline:
         method = cv2.CHAIN_APPROX_SIMPLE
         im2, contours, hierarchy =cv2.findContours(input, mode=mode, method=method)
         return contours
+
+def main():
+    print("Starting vision....")
+    camera = 0
+
+    width = 640
+    height = 360
+
+    camera_server = CameraServer()
+    camera_server.startAutomaticCapture()
+
+    input_stream = camera_server.getVideo()
+    output_stream = camera_server.putVideo('Processed', width, height)
+
+    # Table for vision output information
+    vision_nt = NetworkTables.getTable('Vision')
+
+    # Allocating new images is very expensive, always try to preallocate
+    img = numpy.zeros(shape=(360, 640, 3), dtype=numpy.uint8)
+
+    # Wait for NetworkTables to start
+    time.sleep(0.5)
+
+    grip_pipeline = GripPipeline()
+
+    while True:
+        frame_time, input_img = input_stream.grabFrame(img)
+        output_img = numpy.copy(input_img)
+
+        # Notify output of error and skip iteration
+        if frame_time == 0:
+            output_stream.notifyError(input_stream.getError())
+            continue
+
+        grip_pipeline.process(output_img)
+
+        #print(grip_pipeline.find_contours_output)
+
+        x_list = []
+        y_list = []
+
+        for contour in grip_pipeline.find_contours_output:
+
+         # Ignore small contours that could be because of noise/bad thresholding
+         #if cv2.contourArea(contour) < 15:
+            #continue
+
+            rect = cv2.minAreaRect(contour)
+            center, size, angle = rect
+            center = tuple([int(dim) for dim in center]) # Convert to int so we can draw
+
+            x_list.append((center[0] - width / 2) / (width / 2))
+            y_list.append((center[1] - width / 2) / (width / 2))
+
+
+        vision_nt.putNumberArray('contours X', x_list)
+        vision_nt.putNumberArray('contours Y', y_list)
+
+        output_stream.putFrame(output_img)
+main()
 
 
 

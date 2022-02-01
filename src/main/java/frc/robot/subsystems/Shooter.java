@@ -34,7 +34,9 @@ public class Shooter extends SubsystemBase {
     leftShooter.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, kTimeoutMs);
     
     turretMotor = new WPI_TalonSRX(Constants.SHOOTER_TURRET_TALON);
-    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, kTimeoutMs);
+    setTurretPID(0.039125, 0, 0.001, 0.0927625);
+    
     turretSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SHOOTER_SOLENOID0, Constants.SHOOTER_SOLENOID3);
   }
 
@@ -80,6 +82,22 @@ public class Shooter extends SubsystemBase {
     rightShooter.config_kD(0, kD, kTimeoutMs);
   }
 
+  public void setTurretPID(double kP, double kI, double kD, double kF) {
+    turretMotor.configFactoryDefault();
+
+    turretMotor.setSensorPhase(true);
+    turretMotor.configNominalOutputForward(0, kTimeoutMs);
+		turretMotor.configNominalOutputReverse(0, kTimeoutMs);
+		turretMotor.configPeakOutputForward(0.5, kTimeoutMs);
+		turretMotor.configPeakOutputReverse(-0.5, kTimeoutMs);
+
+		/* Config the Velocity closed loop gains in slot0 */
+		turretMotor.config_kF(0, kF, kTimeoutMs);
+		turretMotor.config_kP(0, kP, kTimeoutMs);
+		turretMotor.config_kI(0, kI, kTimeoutMs);
+    turretMotor.config_kD(0, kD, kTimeoutMs);
+  }
+
   public double getTurretPosition() {
       return turretMotor.getSelectedSensorPosition();
   }
@@ -104,6 +122,14 @@ public class Shooter extends SubsystemBase {
 
   public void turnTurretLeft() {
     turretMotor.set(ControlMode.PercentOutput, -0.3);
+  }
+
+  public void turnTurretRight(double speed) {
+    turretMotor.set(ControlMode.Velocity, speed);
+  }
+
+  public void turnTurretLeft(double speed) {
+    turretMotor.set(ControlMode.Velocity, speed);
   }
 
   public void stopTurretSpin() {
