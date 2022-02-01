@@ -35,6 +35,7 @@ import frc.robot.commands.shooter.ShooterOn;
 import frc.robot.commands.shooter.ShooterRight;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterUp;
+import frc.robot.commands.shooter.VisionTrackingShooter;
 import frc.robot.subsystems.DrivetrainSparkMax;
 import frc.robot.interfaces.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -69,6 +70,7 @@ public class RobotContainer {
 
     // Set default commands on subsystems
     m_drivetrain.setDefaultCommand(new DriveArcade(m_drivetrain));
+    m_shooter.setDefaultCommand(new VisionTrackingShooter(m_shooter));
 
     auto_chooser.setDefaultOption("Auto 1", new Autonomous1(m_drivetrain, m_shooter));
     auto_chooser.addOption("Auto 2", new Autonomous2(m_drivetrain, m_shooter));

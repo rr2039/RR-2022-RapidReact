@@ -6,5 +6,5 @@ double "/Preferences/I"=2e-06
 double "/Preferences/Iz"=20
 double "/Preferences/MaxAcc"=50
 double "/Preferences/P"=0.004
-double "/Preferences/Ramp"=2
+double "/Preferences/Ramp"=0.1
 double "/Preferences/Turn Angle"=90
