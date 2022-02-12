@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Preferences;
 
 public class Shooter extends SubsystemBase {
   WPI_TalonSRX rightShooter = null;
@@ -26,6 +27,13 @@ public class Shooter extends SubsystemBase {
   private static final double kI = 0;
   private static final double kD = 0;
 
+  private static final int leftBound = 6856;
+  private static final int rightBound = -6856;
+
+  private static final double h1 = 15.25; // Height of camera
+  private double h2 = 0;
+  private static final double a1 = 27.5; // Angle of camera
+
   /** Creates a new Shooter. */
   public Shooter() {
     rightShooter = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_TALON);
@@ -35,7 +43,6 @@ public class Shooter extends SubsystemBase {
     
     turretMotor = new WPI_TalonSRX(Constants.SHOOTER_TURRET_TALON);
     turretMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, kTimeoutMs);
-    setTurretPID(0.039125, 0, 0.001, 0.0927625);
     
     turretSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SHOOTER_SOLENOID0, Constants.SHOOTER_SOLENOID3);
   }
@@ -43,6 +50,17 @@ public class Shooter extends SubsystemBase {
   public void setShooterSpeed(double speed) {
     leftShooter.set(ControlMode.Velocity, -speed);
     rightShooter.set(ControlMode.Velocity, speed);
+  }
+
+  public double estimateDistance(double a2) {
+    // d = (h2-h1) / tan(a1+a2)
+    h2 = Preferences.getDouble("Target Height", 0);
+    return (h2 - h1) / Math.tan(Math.toRadians(a1 + a2));
+  }
+
+  public double calculateSpeedFromDistance(double distance) {
+    //return ((distance + 1144) / 0.759);
+    return ((distance + 224) / 0.257);
   }
 
   public double getLeftShooterSpeed() {
@@ -82,7 +100,7 @@ public class Shooter extends SubsystemBase {
     rightShooter.config_kD(0, kD, kTimeoutMs);
   }
 
-  public void setTurretPID(double kP, double kI, double kD, double kF) {
+  public void setTurretPID(double kP, double kI, double kD, double kF, double kIz) {
     turretMotor.configFactoryDefault();
 
     turretMotor.setSensorPhase(true);
@@ -96,6 +114,7 @@ public class Shooter extends SubsystemBase {
 		turretMotor.config_kP(0, kP, kTimeoutMs);
 		turretMotor.config_kI(0, kI, kTimeoutMs);
     turretMotor.config_kD(0, kD, kTimeoutMs);
+    turretMotor.config_IntegralZone(0, kIz, kTimeoutMs);
   }
 
   public double getTurretPosition() {
@@ -104,6 +123,22 @@ public class Shooter extends SubsystemBase {
 
   public void resetTurretPosition() {
     turretMotor.setSelectedSensorPosition(0.0);
+  }
+
+  public boolean turretAtLeftBound() {
+    return leftBound <= getTurretPosition();
+  }
+
+  public boolean turretAtRightBound() {
+    return getTurretPosition() <= rightBound;
+  }
+
+  public boolean turretTurningLeft() {
+    return turretMotor.getMotorOutputPercent() < 0;
+  }
+
+  public boolean turretStopped() {
+    return turretMotor.getMotorOutputPercent() == 0;
   }
 
   public void turnOnShooter() {
@@ -129,7 +164,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void turnTurretLeft(double speed) {
-    turretMotor.set(ControlMode.Velocity, speed);
+    turretMotor.set(ControlMode.Velocity, -speed);
+  }
+
+  public void turnTurretTicks(double ticks) {
+    turretMotor.set(ControlMode.Position, ticks);
   }
 
   public void stopTurretSpin() {
@@ -144,6 +183,10 @@ public class Shooter extends SubsystemBase {
     turretSolenoid.set(Value.kReverse);
   }
 
+  public boolean isTurretUp() {
+    return turretSolenoid.get() == Value.kForward ? true : false;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -152,5 +195,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Left Speed", getLeftShooterSpeed());
     SmartDashboard.putNumber("Shooter Right Speed", getRightShooterSpeed());
     SmartDashboard.putNumber("Shooter Left Pos", rightShooter.getSelectedSensorPosition());
+
+    if (turretAtLeftBound() || turretAtRightBound()) {
+      stopTurretSpin();
+    }
   }
 } 

@@ -28,7 +28,6 @@ import org.opencv.objdetect.*;
 public class GripPipeline implements VisionPipeline {
 
 	//Outputs
-	private Mat cvFlipOutput = new Mat();
 	private Mat resizeImageOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
@@ -44,13 +43,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
 	@Override	public void process(Mat source0) {
-		// Step CV_flip0:
-		Mat cvFlipSrc = source0;
-		FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
-		cvFlip(cvFlipSrc, cvFlipFlipcode, cvFlipOutput);
-
 		// Step Resize_Image0:
-		Mat resizeImageInput = cvFlipOutput;
+		Mat resizeImageInput = source0;
 		double resizeImageWidth = 640.0;
 		double resizeImageHeight = 480.0;
 		int resizeImageInterpolation = Imgproc.INTER_CUBIC;
@@ -58,9 +52,9 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = resizeImageOutput;
-		double[] hsvThresholdHue = {66.36690647482014, 107.27272727272727};
-		double[] hsvThresholdSaturation = {123.32747785418381, 255.0};
-		double[] hsvThresholdValue = {50.44964028776978, 255.0};
+		double[] hsvThresholdHue = {37.23021582733813, 115.49488054607508};
+		double[] hsvThresholdSaturation = {142.17625899280574, 255.0};
+		double[] hsvThresholdValue = {75.67446043165468, 163.61774744027304};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step CV_erode0:
@@ -96,14 +90,6 @@ public class GripPipeline implements VisionPipeline {
 		ArrayList<MatOfPoint> convexHullsContours = filterContoursOutput;
 		convexHulls(convexHullsContours, convexHullsOutput);
 
-	}
-
-	/**
-	 * This method is a generated getter for the output of a CV_flip.
-	 * @return Mat output from CV_flip.
-	 */
-	public Mat cvFlipOutput() {
-		return cvFlipOutput;
 	}
 
 	/**
@@ -154,32 +140,6 @@ public class GripPipeline implements VisionPipeline {
 		return convexHullsOutput;
 	}
 
-
-	/**
-	 * Code used for CV_flip. 
-	 * Per OpenCV spec 0 -> flip on X axis.
-	 * >0 -> flip on Y axis.
-	 * <0 -> flip on both axes.
-	 */
-	public enum FlipCode {
-		X_AXIS(0),
-		Y_AXIS(1),
-		BOTH_AXES(-1);
-		public final int value;
-		FlipCode(int value) {
-			this.value = value;
-		}
-	}	
-	
-	/**
-	 * Flips an image along X, Y or both axes.
-	 * @param src Image to flip.
-	 * @param flipcode FlipCode of which direction to flip.
-	 * @param dst flipped version of the Image.
-	 */
-	private void cvFlip(Mat src, FlipCode flipcode, Mat dst) {
-		Core.flip(src, dst, flipcode.value);
-	}
 
 	/**
 	 * Scales and image to an exact size.

@@ -36,7 +36,7 @@ public class ShooterLeft extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (shooter.getTurretPosition() <= -6856) {
+    if (shooter.turretAtLeftBound()) {
       return true;
     } else {
       return false;

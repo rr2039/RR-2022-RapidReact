@@ -26,6 +26,8 @@ import frc.robot.commands.queuing.QueuingOff;
 import frc.robot.commands.queuing.QueuingOn;
 import frc.robot.commands.queuing.ShooterFeedOff;
 import frc.robot.commands.queuing.ShooterFeedOn;
+import frc.robot.commands.shooter.AimAtTarget;
+import frc.robot.commands.shooter.AutoAimAndShoot;
 import frc.robot.commands.shooter.ResetTurretPosition;
 import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.shooter.ShooterDown;
@@ -70,7 +72,7 @@ public class RobotContainer {
 
     // Set default commands on subsystems
     m_drivetrain.setDefaultCommand(new DriveArcade(m_drivetrain));
-    m_shooter.setDefaultCommand(new VisionTrackingShooter(m_shooter));
+    //m_shooter.setDefaultCommand(new VisionTrackingShooter(m_shooter));
 
     auto_chooser.setDefaultOption("Auto 1", new Autonomous1(m_drivetrain, m_shooter));
     auto_chooser.addOption("Auto 2", new Autonomous2(m_drivetrain, m_shooter));
@@ -109,8 +111,7 @@ public class RobotContainer {
     rightTrigger.whenReleased(new IntakeOff(m_intake, m_queuing));
 
     AxisButton leftTrigger = new AxisButton(driverController, 2, 0.1, 0);
-    leftTrigger.whenPressed(new ShooterOn(m_shooter));
-    leftTrigger.whenReleased(new ShooterOff(m_shooter));
+    leftTrigger.whenPressed(new AutoAimAndShoot(m_shooter));
 
     Button DpadLeft = new POVButton(driverController, 270);
     DpadLeft.whenHeld(new ShooterLeft(m_shooter));
