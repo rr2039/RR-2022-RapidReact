@@ -73,7 +73,7 @@ public class AimAtTarget2_0 extends CommandBase {
   @Override
   public boolean isFinished() {
     double x_pos = tx.getNumber(0).doubleValue();
-    if (-errorMargin < x_pos && x_pos < errorMargin && counter > 25) {
+    if (-errorMargin < x_pos && x_pos < errorMargin && counter > 13) {
       System.out.println("End Pos: " + x_pos);
       System.out.println("Counter End: " + counter);
       return true;

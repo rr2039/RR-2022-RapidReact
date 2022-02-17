@@ -34,6 +34,9 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
 
   DifferentialDrive differentialDrive = null;
 
+  double openRampRate = 0.5;
+  double closedRampRate = 2.0;
+
   /** Creates a new DrivetrainSparkMax. */
   public DrivetrainSparkMax() {
     leftSpark1 = new CANSparkMax(Constants.DRIVETRAIN_LEFT_FRONT, MotorType.kBrushless);
@@ -41,10 +44,14 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
     rightSpark1 = new CANSparkMax(Constants.DRIVETRAIN_RIGHT_FRONT, MotorType.kBrushless);
     rightSpark2 = new CANSparkMax(Constants.DRIVETRAIN_RIGHT_BACK, MotorType.kBrushless);
     
-    leftSpark1.setClosedLoopRampRate(Preferences.getDouble("Ramp", 1.0));
-    leftSpark1.setOpenLoopRampRate(Preferences.getDouble("Ramp", 1.0));
-    rightSpark1.setClosedLoopRampRate(Preferences.getDouble("Ramp", 1.0));
-    rightSpark1.setOpenLoopRampRate(Preferences.getDouble("Ramp", 1.0));
+    //leftSpark1.setClosedLoopRampRate(Preferences.getDouble("Ramp", closedRampRate));
+    leftSpark1.setOpenLoopRampRate(Preferences.getDouble("Ramp", openRampRate));
+    //leftSpark2.setClosedLoopRampRate(Preferences.getDouble("Ramp", closedRampRate));
+    leftSpark2.setOpenLoopRampRate(Preferences.getDouble("Ramp", openRampRate));
+    //rightSpark1.setClosedLoopRampRate(Preferences.getDouble("Ramp", closedRampRate));
+    rightSpark1.setOpenLoopRampRate(Preferences.getDouble("Ramp", openRampRate));
+    //rightSpark2.setClosedLoopRampRate(Preferences.getDouble("Ramp", closedRampRate));
+    rightSpark2.setOpenLoopRampRate(Preferences.getDouble("Ramp", openRampRate));
 
     leftPID = leftSpark1.getPIDController();
     leftPID.setOutputRange(-1.0, 1.0);

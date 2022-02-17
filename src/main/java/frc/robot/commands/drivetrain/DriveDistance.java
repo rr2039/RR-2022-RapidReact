@@ -38,8 +38,13 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double error = drivetrain.getLeftEnc() - drivetrain.getRightEnc();
+    if (error >= 0) {
+      drivetrain.setPIDReference(distance - error, distance, ControlType.kPosition);
+    } else {
+      drivetrain.setPIDReference(distance, distance + error, ControlType.kPosition);
+    }
     //pid.setReference(drivetrain.encoderToDistanceInch(drivetrain.getEnc()), ControlType.kPosition);
-    drivetrain.setPIDReference(distance, distance, ControlType.kPosition);
   }
 
   // Called once the command ends or is interrupted.
