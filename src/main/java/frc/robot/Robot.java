@@ -7,16 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Telemetry;
-
-// Vision Testing Imports
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,8 +19,6 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static Telemetry m_telemetry;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -40,30 +28,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
-    // init Telemetry for Driver Station
-    m_telemetry = new Telemetry();
-
-    // Vision testing
-    /*new Thread(() -> {
-      CameraServer cameraServer = CameraServer.getInstance();
-      UsbCamera camera = cameraServer.startAutomaticCapture();
-      camera.setResolution(640, 480);
-
-      /*CvSink cvSink = cameraServer.getVideo();
-      CvSource outputStream = cameraServer.putVideo("Blur", 640, 480);
-
-      Mat source = new Mat();
-      Mat output = new Mat();
-
-      while(!Thread.interrupted()) {
-        if (cvSink.grabFrame(source) == 0) {
-          continue;
-        }
-        Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-        outputStream.putFrame(output);
-      }*/
-    //}).start();
   }
 
   /**
@@ -88,7 +52,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Robot.m_telemetry.update();
+    
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -105,7 +69,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    Robot.m_telemetry.update();
+    
   }
 
   @Override
@@ -122,7 +86,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Robot.m_telemetry.update();
+    
   }
 
   @Override
