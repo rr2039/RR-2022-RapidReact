@@ -22,9 +22,9 @@ public final class Constants {
   public static final double GYRO_kVoltsPerDegreePerSecond = 0.0128;
   
   // Motor Controllers
-  public static final int DRIVETRAIN_LEFT_FRONT = 40;
-  public static final int DRIVETRAIN_LEFT_BACK = 30;
-  public static final int DRIVETRAIN_RIGHT_FRONT = 20;
+  public static final int DRIVETRAIN_LEFT_FRONT = 11;
+  public static final int DRIVETRAIN_LEFT_BACK = 13;
+  public static final int DRIVETRAIN_RIGHT_FRONT = 12;
   public static final int DRIVETRAIN_RIGHT_BACK = 10;
   public static final int SHOOTER_RIGHT_TALON = 8;
   public static final int SHOOTER_LEFT_TALON = 7;
