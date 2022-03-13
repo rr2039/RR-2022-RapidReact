@@ -59,16 +59,16 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
     rightPID.setOutputRange(-1.0, 1.0);
     
     leftEnc = leftSpark1.getEncoder();
-    leftEnc.setPositionConversionFactor(18.84 / 7.31);
+    //leftEnc.setPositionConversionFactor(18.84 / 7.31);
     rightEnc = rightSpark1.getEncoder();
-    rightEnc.setPositionConversionFactor(18.84 / 7.31);
+    //rightEnc.setPositionConversionFactor(18.84 / 7.31);
 
     leftSpark2.follow(leftSpark1);
     rightSpark2.follow(rightSpark1);
-    rightSpark1.setInverted(true);
+    leftSpark1.setInverted(true);
 
-    drivetrainGyro = new AnalogGyro(0);
-    drivetrainGyro.setSensitivity(Constants.GYRO_kVoltsPerDegreePerSecond);
+    //drivetrainGyro = new AnalogGyro(0);
+    //drivetrainGyro.setSensitivity(Constants.GYRO_kVoltsPerDegreePerSecond);
 
     differentialDrive = new DifferentialDrive(rightSpark1, leftSpark1);
   }
@@ -81,8 +81,8 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
     SmartDashboard.putNumber("P", rightPID.getP());
     SmartDashboard.putNumber("I", rightPID.getI());
     SmartDashboard.putNumber("D", rightPID.getD());
-    SmartDashboard.putNumber("Gyro Pos", drivetrainGyro.getAngle());
-    SmartDashboard.putNumber("Gyro Rate", drivetrainGyro.getRate());
+    //SmartDashboard.putNumber("Gyro Pos", drivetrainGyro.getAngle());
+    //SmartDashboard.putNumber("Gyro Rate", drivetrainGyro.getRate());
   }
 
   public void setMotors(double left, double right) {
