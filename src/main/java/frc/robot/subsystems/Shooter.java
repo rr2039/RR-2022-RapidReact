@@ -5,22 +5,17 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class Shooter extends SubsystemBase {
-  WPI_TalonSRX rightShooter = null;
-  WPI_TalonSRX leftShooter = null;
-  WPI_TalonSRX turretMotor = null;
-  Solenoid turretSolenoid = null;
   TalonFX topShooter = null;
   TalonFX bottomShooter = null;
   DoubleSolenoid intakePistons = null;
@@ -31,9 +26,9 @@ public class Shooter extends SubsystemBase {
   private static final double kI = 0;
   private static final double kD = 0;
 
-  private static final double h1 = 15.25; // Height of camera
+  private static final double h1 = 22.5; // Height of camera
   private double h2 = 0;
-  private static final double a1 = 27.5; // Angle of camera
+  private static final double a1 = 40; // Angle of camera
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -44,22 +39,12 @@ public class Shooter extends SubsystemBase {
     topShooter = new TalonFX(Constants.SHOOTER_TOP_TALON);
     bottomShooter = new TalonFX(Constants.SHOOTER_BOTTOM_TALON);
 
-    intakePistons = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.INTAKE_SOLENOID2, Constants.INTAKE_SOLENOID3);
+    intakePistons = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_SOLENOID2, Constants.INTAKE_SOLENOID3);
   }
 
-  public void intake() {
-    topShooter.set(ControlMode.PercentOutput, 0.1);
-    bottomShooter.set(ControlMode.PercentOutput, -0.1);
-  }
-
-  public void reverseIntake() {
-    topShooter.set(ControlMode.PercentOutput, -0.1);
-    bottomShooter.set(ControlMode.PercentOutput, 0.1);
-  }
-
-  public void intakeOff() {
-    topShooter.set(ControlMode.PercentOutput, 0.0);
-    bottomShooter.set(ControlMode.PercentOutput, 0.0);
+  public void setShooterPercent(double top, double bottom) {
+    topShooter.set(ControlMode.PercentOutput, top);
+    bottomShooter.set(ControlMode.PercentOutput, bottom);
   }
 
   public void intakePistonUp() {
@@ -73,8 +58,8 @@ public class Shooter extends SubsystemBase {
   public void turnOnShooter() {
     //rightShooter.set(ControlMode.PercentOutput, 1.0);
     //leftShooter.set(ControlMode.PercentOutput, -1.0);
-    topShooter.set(ControlMode.PercentOutput, -0.5);
-    bottomShooter.set(ControlMode.PercentOutput, 0.5);
+    topShooter.set(ControlMode.PercentOutput, -1);
+    bottomShooter.set(ControlMode.PercentOutput, 1);
   }
 
   public void turnOffShooter() {
@@ -82,26 +67,6 @@ public class Shooter extends SubsystemBase {
     //leftShooter.set(ControlMode.PercentOutput, 0.0);
     topShooter.set(ControlMode.PercentOutput, 0.0);
     bottomShooter.set(ControlMode.PercentOutput, 0.0);
-  }
-
-  public void turnTurretRight() {
-    turretMotor.set(ControlMode.PercentOutput, 1.0);
-  }
-
-  public void turnTurretLeft() {
-    turretMotor.set(ControlMode.PercentOutput, -1.0);
-  }
-
-  public void stopTurretSpin() {
-    turretMotor.set(ControlMode.PercentOutput, 0.0);
-  }
-
-  public void turretUp() {
-    turretSolenoid.set(true);
-  }
-
-  public void turretDown() {
-    turretSolenoid.set(false);
   }
 
   public void setShooterSpeed(double speed) {
@@ -117,15 +82,17 @@ public class Shooter extends SubsystemBase {
 
   public double calculateSpeedFromDistance(double distance) {
     //return ((distance + 1144) / 0.759);
-    return ((distance + 224) / 0.257);
+    //return ((distance + 6.57) / 0.0139);
+    //return ((distance + 78.8) / 0.167);
+    return 428 + (7.87*distance) + (-0.0118*Math.pow(distance, 2));
   }
 
   public double getTopShooterSpeed() {
     return topShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
   }
                   
-  public double getRightShooterSpeed() {
-    return rightShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
+  public double getBottomShooterSpeed() {
+    return bottomShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
   }
 
   public void setPID(double kP, double kI, double kD, double kF) {
@@ -160,5 +127,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Shooter Left Speed", getTopShooterSpeed());
+    SmartDashboard.putNumber("Shooter Right Speed", getBottomShooterSpeed());
   }
 }

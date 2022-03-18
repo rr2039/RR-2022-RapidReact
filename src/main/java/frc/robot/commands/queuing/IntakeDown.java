@@ -5,15 +5,15 @@
 package frc.robot.commands.queuing;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Queuing;
+import frc.robot.subsystems.Shooter;
 
-public class QueuingOn extends CommandBase {
-  private Queuing queuing = null;
-  /** Creates a new QueuingOn. */
-  public QueuingOn(Queuing m_queuing) {
-    queuing = m_queuing;
+public class IntakeDown extends CommandBase {
+  Shooter shooter = null;
+  /** Creates a new IntakeDown. */
+  public IntakeDown(Shooter m_shooter) {
+    shooter = m_shooter;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(queuing);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class QueuingOn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    queuing.queuingOn();
+    shooter.intakePistonDown();
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +33,6 @@ public class QueuingOn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

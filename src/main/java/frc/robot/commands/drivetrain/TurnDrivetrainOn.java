@@ -2,21 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.queuing;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Queuing;
+import frc.robot.interfaces.Drivetrain;
 
-public class ExpelBall extends CommandBase {
-  private Shooter shooter = null;
-  private Queuing queuing = null;
-  /** Creates a new ExpelBall. */
-  public ExpelBall(Shooter m_shooter, Queuing m_queuing) {
-    shooter = m_shooter;
-    queuing = m_queuing;
+public class TurnDrivetrainOn extends CommandBase {
+  Drivetrain drivetrain = null;
+  double rightDrivetrain = 0;
+  double leftDrivetrain = 0;
+  /** Creates a new TurnDrivetrainOn. */
+  public TurnDrivetrainOn(Drivetrain m_drivetrain, double m_rightDrivetrain, double m_leftDrivetrain) {
+    drivetrain = m_drivetrain;
+    rightDrivetrain = m_rightDrivetrain;
+    leftDrivetrain = m_leftDrivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter, queuing);
+    addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -26,9 +27,7 @@ public class ExpelBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setShooterPercent(-0.25, 0.25);
-    queuing.setRollers(-0.5, 0.5);
-    //shooter.intakePistonUp();
+    drivetrain.arcadeDrive(leftDrivetrain, rightDrivetrain);
   }
 
   // Called once the command ends or is interrupted.

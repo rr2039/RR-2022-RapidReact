@@ -5,18 +5,15 @@
 package frc.robot.commands.queuing;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Queuing;
 import frc.robot.subsystems.Shooter;
 
-public class QueuingOff extends CommandBase {
-  private Queuing queuing = null;
-  private Shooter shooter = null;
-  /** Creates a new QueuingOff. */
-  public QueuingOff(Queuing m_queuing, Shooter m_shooter) {
-    queuing = m_queuing;
+public class IntakeUp extends CommandBase {
+  Shooter shooter = null;
+  /** Creates a new IntakeUp. */
+  public IntakeUp(Shooter m_shooter) {
     shooter = m_shooter;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(queuing, shooter);
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -26,8 +23,7 @@ public class QueuingOff extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    queuing.queuingOff();
-    shooter.intakeOff();
+    shooter.intakePistonUp();
   }
 
   // Called once the command ends or is interrupted.

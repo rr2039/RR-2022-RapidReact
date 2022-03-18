@@ -51,7 +51,7 @@ public class Elevator extends SubsystemBase {
     rightEnc = rightSpark.getEncoder();
     rightEnc.setPositionConversionFactor(2.88);
 
-    pistons = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.ELEVATOR_SOLENOID0, Constants.ELEVATOR_SOLENOID1);
+    pistons = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.ELEVATOR_SOLENOID0, Constants.ELEVATOR_SOLENOID1);
   } 
 
   public void elevatorPistonUp() {

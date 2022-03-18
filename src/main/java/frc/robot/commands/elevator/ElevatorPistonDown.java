@@ -33,7 +33,7 @@ public class ElevatorPistonDown extends CommandBase {
     elevator.elevatorPistonDown();
     shooter.intakePistonDown();
     shooter.turnOffShooter();
-    queuing.queuingOff();
+    queuing.setRollers(0.0, 0.0);
   }
 
   // Called once the command ends or is interrupted.

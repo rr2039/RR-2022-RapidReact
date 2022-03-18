@@ -34,7 +34,7 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
 
   DifferentialDrive differentialDrive = null;
 
-  double openRampRate = 0.5;
+  double openRampRate = 0.25;
   double closedRampRate = 2.0;
 
   /** Creates a new DrivetrainSparkMax. */

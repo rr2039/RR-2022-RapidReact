@@ -12,16 +12,20 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.autonomous.Auto1;
 import frc.robot.commands.drivetrain.DriveArcade;
 import frc.robot.commands.elevator.ElevatorPistonDown;
 import frc.robot.commands.elevator.ElevatorPistonUp;
-import frc.robot.commands.elevator.MoveDegrees;
 import frc.robot.commands.queuing.ExpelBall;
+import frc.robot.commands.queuing.FeedBall;
 import frc.robot.commands.queuing.IntakeBall;
-import frc.robot.commands.queuing.QueuingOff;
-import frc.robot.commands.queuing.QueuingOn;
+import frc.robot.commands.queuing.IntakeDown;
+import frc.robot.commands.queuing.IntakeOff;
+import frc.robot.commands.queuing.IntakeUp;
+import frc.robot.commands.queuing.QueueOff;
+import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.shooter.ShooterOff;
-import frc.robot.commands.shooter.ShooterOn;
+import frc.robot.commands.shooter.ShooterSpeedFromDistance;
 import frc.robot.subsystems.DrivetrainSparkMax;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Queuing;
@@ -48,6 +52,7 @@ public class RobotContainer {
 
   // Controller setup
   public static Joystick driverController = new Joystick(Constants.DRIVER_CONTROLLER);
+  public static Joystick operatorController = new Joystick(Constants.OPERATOR_CONTROLLER);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -57,7 +62,7 @@ public class RobotContainer {
     // Set default commands on subsystems
     m_drivetrain.setDefaultCommand(new DriveArcade(m_drivetrain));
     //m_shooter.setDefaultCommand(new VisionTrackingShooter(m_shooter));
-
+    auto_chooser.setDefaultOption("LowGoal", new Auto1(m_drivetrain, m_shooter, m_queuing, m_elevator));
     SmartDashboard.putData(auto_chooser);
   }
 
@@ -68,26 +73,56 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    Button B1 = new JoystickButton(driverController, 1);
-    B1.whenPressed(new MoveDegrees(m_elevator, 90.0));
-    Button B2 = new JoystickButton(driverController, 2);
-    B2.whenPressed(new MoveDegrees(m_elevator, -90.0));
+    //Driver Controller
+    Button DRTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    DRTrigger.whenPressed(new SetShooterSpeed(m_shooter, 1150));
+    DRTrigger.whenReleased(new ShooterOff(m_shooter));
+    Button DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
+    DLTrigger.whenPressed(new ShooterSpeedFromDistance(m_shooter));
+    DLTrigger.whenReleased(new ShooterOff(m_shooter));
+    Button B6 = new JoystickButton(driverController, 6);
+    B6.whenPressed(new SetShooterSpeed(m_shooter, 500));
+    B6.whenReleased(new ShooterOff(m_shooter));
+    Button DB1 = new JoystickButton(driverController, 1);
+    DB1.whenPressed(new FeedBall(m_queuing));
+    DB1.whenReleased(new QueueOff(m_queuing));
+    /*
+    Button B3 = new JoystickButton(driverController, 3);
+    B3.whenPressed(new MoveDegrees(m_elevator, 22.5).withTimeout(4));
+    Button B4 = new JoystickButton(driverController, 4);
+    B4.whenPressed(new MoveDegrees(m_elevator, -22.5).withTimeout(4));
+    */
+    /*
     Button B3 = new JoystickButton(driverController, 3);
     B3.whenPressed(new ShooterOff(m_shooter));
     Button B4 = new JoystickButton(driverController, 4);
-    B4.whenPressed(new ShooterOn(m_shooter));
-    Button B5 = new JoystickButton(driverController, 5);
-    B5.whenPressed(new IntakeBall(m_shooter, m_queuing));
-    B5.whenReleased(new QueuingOff(m_queuing, m_shooter));
-    Button B6 = new JoystickButton(driverController, 6);
-    B6.whenPressed(new QueuingOn(m_queuing));
-    //Button B6 = new JoystickButton(driverController, 6);
-    //B6.whenPressed(new ExpelBall(m_shooter, m_queuing));
-    //B6.whenReleased(new QueuingOff(m_queuing, m_shooter));
-    
-    Button DpadUp = new POVButton(driverController, 0);
+    B4.whenPressed(new SetShooterSpeed(m_shooter, 100));
+    Button RTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    RTrigger.whenPressed(new FeedBall(m_queuing));
+    RTrigger.whenReleased(new QueueOff(m_queuing));
+    */
+
+    //Operator Controller
+    //Button B1 = new JoystickButton(operatorController, 1);
+    //B1.whenPressed(new MoveDegrees(m_elevator, 45.0));
+    //Button B2 = new JoystickButton(operatorController, 2);
+    //B2.whenPressed(new MoveDegrees(m_elevator, -45.0));
+    Button B1 = new JoystickButton(operatorController, 1);
+    B1.whenPressed(new IntakeUp(m_shooter));
+    Button B2 = new JoystickButton(operatorController, 2);
+    B2.whenPressed(new IntakeDown(m_shooter));
+
+    Button ORTrigger = new AxisButton(operatorController, 3, 0.1, 0);
+    ORTrigger.whenPressed(new IntakeBall(m_shooter, m_queuing));
+    ORTrigger.whenReleased(new IntakeOff(m_queuing, m_shooter));
+    Button OLTrigger = new AxisButton(operatorController, 2, 0.1, 0);
+    OLTrigger.whenPressed(new ExpelBall(m_shooter, m_queuing));
+    OLTrigger.whenReleased(new IntakeOff(m_queuing, m_shooter));
+
+
+    Button DpadUp = new POVButton(operatorController, 0);
     DpadUp.whenPressed(new ElevatorPistonUp(m_elevator, m_shooter));
-    Button DpadDown = new POVButton(driverController, 180);
+    Button DpadDown = new POVButton(operatorController, 180);
     DpadDown.whenPressed(new ElevatorPistonDown(m_elevator, m_shooter, m_queuing));
   }
 

@@ -17,7 +17,7 @@ public final class Constants {
 
   // General Constants
   public static final int DRIVETRAIN_GEARBOX_RATIO = 0;
-  public static final double SHOOTER_CONVERSION_FACTOR = (4096/600);
+  public static final double SHOOTER_CONVERSION_FACTOR = 1;
 
   public static final int GYRO_PORT = 0;
   public static final double GYRO_kVoltsPerDegreePerSecond = 0.0128;
@@ -53,6 +53,7 @@ public final class Constants {
 
   // Joysticks
   public static final int DRIVER_CONTROLLER = 0;
+  public static final int OPERATOR_CONTROLLER = 1;
   public static final int DRIVER_CONTROLLER_MOVE_AXIS = 1; // Change for your controller
   public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 4; // Change for your controller
 }

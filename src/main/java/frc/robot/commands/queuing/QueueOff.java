@@ -5,18 +5,15 @@
 package frc.robot.commands.queuing;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Queuing;
 
-public class ExpelBall extends CommandBase {
-  private Shooter shooter = null;
+public class QueueOff extends CommandBase {
   private Queuing queuing = null;
-  /** Creates a new ExpelBall. */
-  public ExpelBall(Shooter m_shooter, Queuing m_queuing) {
-    shooter = m_shooter;
+  /** Creates a new QueOff. */
+  public QueueOff(Queuing m_queuing) {
     queuing = m_queuing;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter, queuing);
+    addRequirements(queuing);
   }
 
   // Called when the command is initially scheduled.
@@ -26,9 +23,7 @@ public class ExpelBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setShooterPercent(-0.25, 0.25);
-    queuing.setRollers(-0.5, 0.5);
-    //shooter.intakePistonUp();
+    queuing.setRollers(0.0, 0.0);
   }
 
   // Called once the command ends or is interrupted.

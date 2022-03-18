@@ -26,8 +26,9 @@ public class IntakeBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.intake();
-    queuing.indexBall();
+    shooter.setShooterPercent(0.5, -0.5);
+    queuing.setRollers(0.5, -0.5);
+    shooter.intakePistonDown();
   }
 
   // Called once the command ends or is interrupted.
