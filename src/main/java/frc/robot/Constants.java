@@ -57,6 +57,22 @@ public final class Constants {
   public static final int DRIVER_CONTROLLER_MOVE_AXIS = 1; // Change for your controller
   public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 4; // Change for your controller
 
+  public static final double[][] SHOOTER_DATA = {
+    {12,550},
+    {24,625},
+    {42,725},
+    {60,825},
+    {72,875},
+    {86,1150},
+    {96,1150},
+    {110,1200},
+    {122,1250},
+    {145,1300},
+    {168,1375},
+    {189,1400},
+    {214,1550}
+  };
+
   /*public static final String[] SHOOTER_DATA = [
     194.88132730517003:1477.2659190957556, 
     200.96532198784442:1500.4115510407125, 

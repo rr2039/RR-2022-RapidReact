@@ -24,7 +24,7 @@ public class Auto3 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveDistance(m_drivetrain, -25), 
+      new DriveDistance(m_drivetrain, -25).withTimeout(3), 
       new WaitCommand(1),
       new AutoAimAndShoot(m_shooter, m_drivetrain),
       new FeedBall(m_queuing),

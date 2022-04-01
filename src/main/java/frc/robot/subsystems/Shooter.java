@@ -34,20 +34,7 @@ public class Shooter extends SubsystemBase {
   private double h2 = 0;
   private static final double a1 = 40; // Angle of camera
 
-  private double[][] data = {
-    {12,550},
-    {24,625},
-    {42,725},
-    {60,825},
-    {72,875},
-    {84,1175},
-    {108,1225},
-    {120,1275},
-    {144,1315},
-    {168,1375},
-    {214,1550}
-  };
-  private LinearInterpolator interpolator = new LinearInterpolator(data);
+  private LinearInterpolator interpolator = new LinearInterpolator(Constants.SHOOTER_DATA);
 
   /** Creates a new Shooter. */
   public Shooter() {
