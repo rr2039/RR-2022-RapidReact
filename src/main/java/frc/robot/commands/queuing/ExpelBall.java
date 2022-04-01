@@ -26,7 +26,7 @@ public class ExpelBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setShooterPercent(-0.25, 0.25);
+    shooter.setShooterPercent(0.25, 0.25);
     queuing.setRollers(-0.5, 0.5);
     //shooter.intakePistonUp();
   }

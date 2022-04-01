@@ -7,6 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utilities.LinearInterpolator;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Preferences;
@@ -30,6 +34,21 @@ public class Shooter extends SubsystemBase {
   private double h2 = 0;
   private static final double a1 = 40; // Angle of camera
 
+  private double[][] data = {
+    {12,550},
+    {24,625},
+    {42,725},
+    {60,825},
+    {72,875},
+    {84,1175},
+    {108,1225},
+    {120,1275},
+    {144,1315},
+    {168,1375},
+    {214,1550}
+  };
+  private LinearInterpolator interpolator = new LinearInterpolator(data);
+
   /** Creates a new Shooter. */
   public Shooter() {
     //rightShooter = new WPI_TalonSRX(Constants.SHOOTER_RIGHT_TALON);
@@ -37,7 +56,13 @@ public class Shooter extends SubsystemBase {
     //turretMotor = new WPI_TalonSRX(Constants.SHOOTER_TURRET_TALON);
     //turretSolenoid = new Solenoid(null, Constants.SHOOTER_SOLENOID0);
     topShooter = new TalonFX(Constants.SHOOTER_TOP_TALON);
+    topShooter.setInverted(true);
     bottomShooter = new TalonFX(Constants.SHOOTER_BOTTOM_TALON);
+
+    topShooter.configVoltageCompSaturation(10, 0);
+    topShooter.enableVoltageCompensation(true);
+    bottomShooter.configVoltageCompSaturation(10, 0);
+    bottomShooter.enableVoltageCompensation(true);
 
     intakePistons = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_SOLENOID2, Constants.INTAKE_SOLENOID3);
   }
@@ -58,8 +83,8 @@ public class Shooter extends SubsystemBase {
   public void turnOnShooter() {
     //rightShooter.set(ControlMode.PercentOutput, 1.0);
     //leftShooter.set(ControlMode.PercentOutput, -1.0);
-    topShooter.set(ControlMode.PercentOutput, -1);
-    bottomShooter.set(ControlMode.PercentOutput, 1);
+    topShooter.set(ControlMode.PercentOutput, 0.3);
+    bottomShooter.set(ControlMode.PercentOutput, 0.3);
   }
 
   public void turnOffShooter() {
@@ -70,7 +95,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setShooterSpeed(double speed) {
-    topShooter.set(ControlMode.Velocity, -speed);
+    topShooter.set(ControlMode.Velocity, speed);
     bottomShooter.set(ControlMode.Velocity, speed);
   }
 
@@ -84,18 +109,23 @@ public class Shooter extends SubsystemBase {
     //return ((distance + 1144) / 0.759);
     //return ((distance + 6.57) / 0.0139);
     //return ((distance + 78.8) / 0.167);
-    return 428 + (7.87*distance) + (-0.0118*Math.pow(distance, 2));
+    //return 428 + (7.87*distance) + (-0.0118*Math.pow(distance, 2));
+    //return 391 + (9.78*distance) + (-0.0226*Math.pow(distance, 2));
+    //return 433 + (7.81*distance) + (-0.00877*Math.pow(distance, 2));
+    return interpolator.getInterpolatedValue(distance);
   }
 
   public double getTopShooterSpeed() {
-    return topShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
+    //return topShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
+    return ((topShooter.getSelectedSensorVelocity() * 600) / 4096);
   }
                   
   public double getBottomShooterSpeed() {
-    return bottomShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
+    //return bottomShooter.getSelectedSensorVelocity() / Constants.SHOOTER_CONVERSION_FACTOR;
+    return ((bottomShooter.getSelectedSensorVelocity() * 600) / 4096);
   }
 
-  public void setPID(double kP, double kI, double kD, double kF) {
+  public void setPID(double kP, double kI, double kD, double topkF, double bottomkF) {
     topShooter.configFactoryDefault();
     bottomShooter.configFactoryDefault();
 
@@ -106,7 +136,7 @@ public class Shooter extends SubsystemBase {
 		topShooter.configPeakOutputReverse(-1, kTimeoutMs);
 
 		/* Config the Velocity closed loop gains in slot0 */
-		topShooter.config_kF(0, kF, kTimeoutMs);
+		topShooter.config_kF(0, topkF, kTimeoutMs);
 		topShooter.config_kP(0, kP, kTimeoutMs);
 		topShooter.config_kI(0, kI, kTimeoutMs);
     topShooter.config_kD(0, kD, kTimeoutMs);
@@ -118,7 +148,7 @@ public class Shooter extends SubsystemBase {
 		bottomShooter.configPeakOutputReverse(-1, kTimeoutMs);
 
 		/* Config the Velocity closed loop gains in slot0 */
-		bottomShooter.config_kF(0, kF, kTimeoutMs);
+		bottomShooter.config_kF(0, bottomkF, kTimeoutMs);
 		bottomShooter.config_kP(0, kP, kTimeoutMs);
 		bottomShooter.config_kI(0, kI, kTimeoutMs);
     bottomShooter.config_kD(0, kD, kTimeoutMs);
@@ -127,7 +157,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Shooter Left Speed", getTopShooterSpeed());
-    SmartDashboard.putNumber("Shooter Right Speed", getBottomShooterSpeed());
+    SmartDashboard.putNumber("Shooter Top Speed", getTopShooterSpeed());
+    SmartDashboard.putNumber("Shooter Bottom Speed", getBottomShooterSpeed());
   }
 }

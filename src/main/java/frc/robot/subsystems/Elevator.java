@@ -19,14 +19,14 @@ import frc.robot.Constants;
 import com.revrobotics.CANSparkMax.ControlType;
 
 public class Elevator extends SubsystemBase {
-    CANSparkMax leftSpark = null;
-    CANSparkMax rightSpark = null;
+    //CANSparkMax leftSpark = null;
+    //CANSparkMax rightSpark = null;
 
-    RelativeEncoder leftEnc = null;
-    RelativeEncoder rightEnc = null;
+    //RelativeEncoder leftEnc = null;
+    //RelativeEncoder rightEnc = null;
 
-    SparkMaxPIDController leftPID = null;
-    SparkMaxPIDController rightPID = null;
+    //SparkMaxPIDController leftPID = null;
+    //SparkMaxPIDController rightPID = null;
 
     double openRampRate = 10;
     double closedRampRate = 10;
@@ -35,7 +35,7 @@ public class Elevator extends SubsystemBase {
 
   /**Creates a new ShooterSparkMax. **/
   public Elevator() {
-    leftSpark = new CANSparkMax(Constants.SHOOTER_LEFT_SPARK, MotorType.kBrushless);
+    /*leftSpark = new CANSparkMax(Constants.SHOOTER_LEFT_SPARK, MotorType.kBrushless);
     rightSpark = new CANSparkMax(Constants.SHOOTER_RIGHT_SPARK, MotorType.kBrushless);
 
     leftSpark.setOpenLoopRampRate(Preferences.getDouble("Ramp", openRampRate));
@@ -50,7 +50,7 @@ public class Elevator extends SubsystemBase {
     leftEnc.setPositionConversionFactor(2.88);
     rightEnc = rightSpark.getEncoder();
     rightEnc.setPositionConversionFactor(2.88);
-
+    */
     pistons = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.ELEVATOR_SOLENOID0, Constants.ELEVATOR_SOLENOID1);
   } 
 
@@ -63,7 +63,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setPID(double p, double i, double d, double f, double Iz) {
-    //Left
+    /*//Left
     leftPID.setP(p);
     leftPID.setI(i);
     leftPID.setD(d);
@@ -74,36 +74,38 @@ public class Elevator extends SubsystemBase {
     rightPID.setI(i);
     rightPID.setD(d);
     rightPID.setFF(f);
-    rightPID.setIZone(Iz);
+    rightPID.setIZone(Iz);*/
   }
 
   public void setPIDReference(double leftReference, double rightReference, ControlType controlType) {
-    leftPID.setReference(leftReference, controlType);
-    rightPID.setReference(rightReference, controlType);
+    //leftPID.setReference(leftReference, controlType);
+    //rightPID.setReference(rightReference, controlType);
   }
 
   public void setMotors(double left, double right) {
-    leftSpark.set(left);
-    rightSpark.set(right);
+    //leftSpark.set(left);
+    //rightSpark.set(right);
   }
 
   public void resetEncoders() {
-    leftEnc.setPosition(0.0);
-    rightEnc.setPosition(0.0);
+    //leftEnc.setPosition(0.0);
+    //rightEnc.setPosition(0.0);
   }
 
   public double getLeftEnc() {
-    return leftEnc.getPosition();
+    //return leftEnc.getPosition();
+    return 0.0;
   }
 
   public double getRightEnc() {
-    return rightEnc.getPosition();
+    //return rightEnc.getPosition();
+    return 0.0;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Elevator Left", leftEnc.getPosition());
-    SmartDashboard.putNumber("Elevator Right", rightEnc.getPosition());
+    //SmartDashboard.putNumber("Elevator Left", leftEnc.getPosition());
+    //SmartDashboard.putNumber("Elevator Right", rightEnc.getPosition());
   }
 }

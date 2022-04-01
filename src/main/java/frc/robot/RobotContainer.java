@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.autonomous.Auto1;
+import frc.robot.commands.autonomous.Auto2;
+import frc.robot.commands.autonomous.Auto3;
 import frc.robot.commands.drivetrain.DriveArcade;
 import frc.robot.commands.elevator.ElevatorPistonDown;
 import frc.robot.commands.elevator.ElevatorPistonUp;
@@ -23,8 +25,10 @@ import frc.robot.commands.queuing.IntakeDown;
 import frc.robot.commands.queuing.IntakeOff;
 import frc.robot.commands.queuing.IntakeUp;
 import frc.robot.commands.queuing.QueueOff;
+import frc.robot.commands.shooter.AutoAimAndShoot;
 import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.shooter.ShooterOff;
+import frc.robot.commands.shooter.ShooterOn;
 import frc.robot.commands.shooter.ShooterSpeedFromDistance;
 import frc.robot.subsystems.DrivetrainSparkMax;
 import frc.robot.subsystems.Elevator;
@@ -63,6 +67,8 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new DriveArcade(m_drivetrain));
     //m_shooter.setDefaultCommand(new VisionTrackingShooter(m_shooter));
     auto_chooser.setDefaultOption("LowGoal", new Auto1(m_drivetrain, m_shooter, m_queuing, m_elevator));
+    auto_chooser.addOption("2BallAuto", new Auto2(m_drivetrain, m_shooter, m_queuing, m_elevator));
+    auto_chooser.addOption("1BallHigh", new Auto3(m_shooter, m_drivetrain, m_queuing));
     SmartDashboard.putData(auto_chooser);
   }
 
@@ -80,12 +86,21 @@ public class RobotContainer {
     Button DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
     DLTrigger.whenPressed(new ShooterSpeedFromDistance(m_shooter));
     DLTrigger.whenReleased(new ShooterOff(m_shooter));
+    Button B5 = new JoystickButton(driverController, 5);
+    B5.whenPressed(new AutoAimAndShoot(m_shooter, m_drivetrain));
+    B5.whenReleased(new ShooterOff(m_shooter));
     Button B6 = new JoystickButton(driverController, 6);
-    B6.whenPressed(new SetShooterSpeed(m_shooter, 500));
+    B6.whenPressed(new SetShooterSpeed(m_shooter, 550));
     B6.whenReleased(new ShooterOff(m_shooter));
     Button DB1 = new JoystickButton(driverController, 1);
     DB1.whenPressed(new FeedBall(m_queuing));
     DB1.whenReleased(new QueueOff(m_queuing));
+    Button B4 = new JoystickButton(driverController, 4);
+    B4.whenPressed(new SetShooterSpeed(m_shooter, 550, true));
+    B4.whenReleased(new ShooterOff(m_shooter));
+    Button B3 = new JoystickButton(driverController, 3);
+    B3.whenPressed(new ShooterOn(m_shooter));
+    B3.whenReleased(new ShooterOff(m_shooter));
     /*
     Button B3 = new JoystickButton(driverController, 3);
     B3.whenPressed(new MoveDegrees(m_elevator, 22.5).withTimeout(4));
