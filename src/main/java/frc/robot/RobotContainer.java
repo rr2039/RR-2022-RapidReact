@@ -26,6 +26,7 @@ import frc.robot.commands.queuing.IntakeOff;
 import frc.robot.commands.queuing.IntakeUp;
 import frc.robot.commands.queuing.QueueOff;
 import frc.robot.commands.shooter.AutoAimAndShoot;
+import frc.robot.commands.shooter.AutoAimAndShoot2_0;
 import frc.robot.commands.shooter.SetShooterSpeed;
 import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.ShooterOn;
@@ -102,8 +103,9 @@ public class RobotContainer {
     B4.whenPressed(new SetShooterSpeed(m_shooter, 550, true));
     B4.whenReleased(new ShooterOff(m_shooter));
     Button B3 = new JoystickButton(driverController, 3);
-    B3.whenPressed(new ShooterOn(m_shooter));
+    B3.whenPressed(new AutoAimAndShoot2_0(m_shooter, m_drivetrain));
     B3.whenReleased(new ShooterOff(m_shooter));
+
     /*
     Button B3 = new JoystickButton(driverController, 3);
     B3.whenPressed(new MoveDegrees(m_elevator, 22.5).withTimeout(4));
