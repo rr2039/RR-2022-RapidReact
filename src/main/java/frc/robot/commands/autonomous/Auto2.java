@@ -41,7 +41,7 @@ public class Auto2 extends SequentialCommandGroup {
       new TurnDegree(m_drivetrain, -75).withTimeout(2),
       new ElevatorPistonUp(m_elevator, m_shooter),
       new AimAtTarget2_0(m_drivetrain).withTimeout(2), 
-      new SetShooterSpeed(m_shooter, 1175),
+      new SetShooterSpeed(m_shooter, 1175).withTimeout(2),
       new FeedBall(m_queuing),
       new WaitCommand(3),
       new QueueOff(m_queuing),

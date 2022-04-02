@@ -95,6 +95,9 @@ public class RobotContainer {
     Button DB1 = new JoystickButton(driverController, 1);
     DB1.whenPressed(new FeedBall(m_queuing));
     DB1.whenReleased(new QueueOff(m_queuing));
+    Button DB2 = new JoystickButton(driverController, 2);
+    DB2.whenPressed(new FeedBall(m_queuing));
+    DB2.whenReleased(new QueueOff(m_queuing));
     Button B4 = new JoystickButton(driverController, 4);
     B4.whenPressed(new SetShooterSpeed(m_shooter, 550, true));
     B4.whenReleased(new ShooterOff(m_shooter));

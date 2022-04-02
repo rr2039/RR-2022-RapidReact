@@ -14,7 +14,7 @@ public class SetShooterSpeed extends CommandBase {
   private double speed;
   private boolean pref = false;
   private double counter = 0;
-  private double errorMargin = 20;
+  private double errorMargin = 15;
   private double rpms = 0;
   private boolean setSpeed = false;
 

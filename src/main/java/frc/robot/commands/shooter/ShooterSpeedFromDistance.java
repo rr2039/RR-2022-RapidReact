@@ -20,7 +20,7 @@ public class ShooterSpeedFromDistance extends CommandBase {
   private NetworkTable limelightTable = inst.getTable("limelight");
   private NetworkTableEntry tv, ty;
   private double counter = 0;
-  private double errorMargin = 20;
+  private double errorMargin = 15;
   private double rpms = 0;
   private boolean setSpeed = false;
   private double distance = 0;
