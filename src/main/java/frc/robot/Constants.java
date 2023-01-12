@@ -23,10 +23,10 @@ public final class Constants {
   public static final double GYRO_kVoltsPerDegreePerSecond = 0.0128;
   
   // Motor Controllers
-  public static final int DRIVETRAIN_LEFT_FRONT = 21;
-  public static final int DRIVETRAIN_LEFT_BACK = 22;
-  public static final int DRIVETRAIN_RIGHT_FRONT = 31;
-  public static final int DRIVETRAIN_RIGHT_BACK = 32; //10
+  public static final int DRIVETRAIN_LEFT_FRONT = 31;//21
+  public static final int DRIVETRAIN_LEFT_BACK = 22;//22
+  public static final int DRIVETRAIN_RIGHT_FRONT = 32; //31
+  public static final int DRIVETRAIN_RIGHT_BACK = 21; //32
   public static final int SHOOTER_RIGHT_TALON = 8;
   public static final int SHOOTER_LEFT_TALON = 7;
   public static final int SHOOTER_TURRET_TALON = 5;
@@ -55,7 +55,7 @@ public final class Constants {
   public static final int DRIVER_CONTROLLER = 0;
   public static final int OPERATOR_CONTROLLER = 1;
   public static final int DRIVER_CONTROLLER_MOVE_AXIS = 1; // Change for your controller
-  public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 4; // Change for your controller
+  public static final int DRIVER_CONTROLLER_ROTATE_AXIS = 2; // Change for your controller
 
   public static final double[][] SHOOTER_DATA = {
     {12,550},

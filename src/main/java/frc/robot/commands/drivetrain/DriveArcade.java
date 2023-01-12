@@ -25,8 +25,12 @@ public class DriveArcade extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double moveSpeed = -RobotContainer.driverController.getRawAxis(Constants.DRIVER_CONTROLLER_MOVE_AXIS);
+    double moveSpeed = RobotContainer.driverController.getRawAxis(Constants.DRIVER_CONTROLLER_MOVE_AXIS);
     double rotateSpeed = -RobotContainer.driverController.getRawAxis(Constants.DRIVER_CONTROLLER_ROTATE_AXIS);
+
+    //System.out.println("moveSpeed; " +moveSpeed);
+    //System.out.println("rotateSpeed; " +rotateSpeed);
+    //System.out.println("---");
 
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }

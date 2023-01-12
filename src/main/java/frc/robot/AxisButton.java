@@ -4,9 +4,9 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-public class AxisButton extends Button { // change to Trigger?
+public class AxisButton extends Trigger { // change to Trigger?
 
 	Joystick joystick;
 	int axis;
@@ -29,7 +29,7 @@ public class AxisButton extends Button { // change to Trigger?
 	}
 	
 	@Override
-	public boolean get() {
+	public boolean getAsBoolean() {
 		double threshold = wasPressed ? releaseThreshold : pressThreshold;
 		wasPressed = reverseFactor * joystick.getRawAxis(axis) > threshold; 
 		return wasPressed;

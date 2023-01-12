@@ -65,7 +65,7 @@ public class DrivetrainSparkMax extends SubsystemBase implements Drivetrain {
 
     leftSpark2.follow(leftSpark1);
     rightSpark2.follow(rightSpark1);
-    leftSpark1.setInverted(true);
+    leftSpark1.setInverted(false);
 
     //drivetrainGyro = new AnalogGyro(0);
     //drivetrainGyro.setSensitivity(Constants.GYRO_kVoltsPerDegreePerSecond);

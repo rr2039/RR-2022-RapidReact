@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -81,30 +81,30 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Driver Controller
-    Button DRTrigger = new AxisButton(driverController, 3, 0.1, 0);
-    DRTrigger.whenPressed(new SetShooterSpeed(m_shooter, 1150));
-    DRTrigger.whenReleased(new ShooterOff(m_shooter));
-    Button DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
-    DLTrigger.whenPressed(new ShooterSpeedFromDistance(m_shooter));
-    DLTrigger.whenReleased(new ShooterOff(m_shooter));
-    Button B5 = new JoystickButton(driverController, 5);
-    B5.whenPressed(new AutoAimAndShoot(m_shooter, m_drivetrain));
-    B5.whenReleased(new ShooterOff(m_shooter));
-    Button B6 = new JoystickButton(driverController, 6);
-    B6.whenPressed(new SetShooterSpeed(m_shooter, 550));
-    B6.whenReleased(new ShooterOff(m_shooter));
-    Button DB1 = new JoystickButton(driverController, 1);
-    DB1.whenPressed(new FeedBall(m_queuing));
-    DB1.whenReleased(new QueueOff(m_queuing));
-    Button DB2 = new JoystickButton(driverController, 2);
-    DB2.whenPressed(new FeedBall(m_queuing));
-    DB2.whenReleased(new QueueOff(m_queuing));
-    Button B4 = new JoystickButton(driverController, 4);
-    B4.whenPressed(new SetShooterSpeed(m_shooter, 550, true));
-    B4.whenReleased(new ShooterOff(m_shooter));
-    Button B3 = new JoystickButton(driverController, 3);
-    B3.whenPressed(new AutoAimAndShoot2_0(m_shooter, m_drivetrain));
-    B3.whenReleased(new ShooterOff(m_shooter));
+    Trigger DRTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    DRTrigger.onTrue(new SetShooterSpeed(m_shooter, 1150));
+    DRTrigger.onFalse(new ShooterOff(m_shooter));
+    Trigger DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
+    DLTrigger.onTrue(new ShooterSpeedFromDistance(m_shooter));
+    DLTrigger.onFalse(new ShooterOff(m_shooter));
+    Trigger B5 = new JoystickButton(driverController, 5);
+    B5.onTrue(new AutoAimAndShoot(m_shooter, m_drivetrain));
+    B5.onFalse(new ShooterOff(m_shooter));
+    Trigger B6 = new JoystickButton(driverController, 6);
+    B6.onTrue(new SetShooterSpeed(m_shooter, 550));
+    B6.onFalse(new ShooterOff(m_shooter));
+    Trigger DB1 = new JoystickButton(driverController, 1);
+    DB1.onTrue(new FeedBall(m_queuing));
+    DB1.onFalse(new QueueOff(m_queuing));
+    Trigger DB2 = new JoystickButton(driverController, 2);
+    DB2.onTrue(new FeedBall(m_queuing));
+    DB2.onFalse(new QueueOff(m_queuing));
+    Trigger B4 = new JoystickButton(driverController, 4);
+    B4.onTrue(new SetShooterSpeed(m_shooter, 550, true));
+    B4.onFalse(new ShooterOff(m_shooter));
+    Trigger B3 = new JoystickButton(driverController, 3);
+    B3.onTrue(new AutoAimAndShoot2_0(m_shooter, m_drivetrain));
+    B3.onFalse(new ShooterOff(m_shooter));
 
     /*
     Button B3 = new JoystickButton(driverController, 3);
@@ -127,23 +127,23 @@ public class RobotContainer {
     //B1.whenPressed(new MoveDegrees(m_elevator, 45.0));
     //Button B2 = new JoystickButton(operatorController, 2);
     //B2.whenPressed(new MoveDegrees(m_elevator, -45.0));
-    Button B1 = new JoystickButton(operatorController, 1);
-    B1.whenPressed(new IntakeUp(m_shooter));
-    Button B2 = new JoystickButton(operatorController, 2);
-    B2.whenPressed(new IntakeDown(m_shooter));
+    Trigger B1 = new JoystickButton(operatorController, 1);
+    B1.onTrue(new IntakeUp(m_shooter));
+    Trigger B2 = new JoystickButton(operatorController, 2);
+    B2.onFalse(new IntakeDown(m_shooter));
 
-    Button ORTrigger = new AxisButton(operatorController, 3, 0.1, 0);
-    ORTrigger.whenPressed(new IntakeBall(m_shooter, m_queuing));
-    ORTrigger.whenReleased(new IntakeOff(m_queuing, m_shooter));
-    Button OLTrigger = new AxisButton(operatorController, 2, 0.1, 0);
-    OLTrigger.whenPressed(new ExpelBall(m_shooter, m_queuing));
-    OLTrigger.whenReleased(new IntakeOff(m_queuing, m_shooter));
+    Trigger ORTrigger = new AxisButton(operatorController, 3, 0.1, 0);
+    ORTrigger.onTrue(new IntakeBall(m_shooter, m_queuing));
+    ORTrigger.onFalse(new IntakeOff(m_queuing, m_shooter));
+    Trigger OLTrigger = new AxisButton(operatorController, 2, 0.1, 0);
+    OLTrigger.onTrue(new ExpelBall(m_shooter, m_queuing));
+    OLTrigger.onFalse(new IntakeOff(m_queuing, m_shooter));
 
 
-    Button DpadUp = new POVButton(operatorController, 0);
-    DpadUp.whenPressed(new ElevatorPistonUp(m_elevator, m_shooter));
-    Button DpadDown = new POVButton(operatorController, 180);
-    DpadDown.whenPressed(new ElevatorPistonDown(m_elevator, m_shooter, m_queuing));
+    Trigger DpadUp = new POVButton(operatorController, 0);
+    DpadUp.onTrue(new ElevatorPistonUp(m_elevator, m_shooter));
+    Trigger DpadDown = new POVButton(operatorController, 180);
+    DpadDown.onFalse(new ElevatorPistonDown(m_elevator, m_shooter, m_queuing));
   }
 
   /**
