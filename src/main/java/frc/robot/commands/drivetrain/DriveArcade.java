@@ -28,10 +28,6 @@ public class DriveArcade extends CommandBase {
     double moveSpeed = RobotContainer.driverController.getRawAxis(Constants.DRIVER_CONTROLLER_MOVE_AXIS);
     double rotateSpeed = -RobotContainer.driverController.getRawAxis(Constants.DRIVER_CONTROLLER_ROTATE_AXIS);
 
-    //System.out.println("moveSpeed; " +moveSpeed);
-    //System.out.println("rotateSpeed; " +rotateSpeed);
-    //System.out.println("---");
-
     drivetrain.arcadeDrive(moveSpeed, rotateSpeed);
   }
 
