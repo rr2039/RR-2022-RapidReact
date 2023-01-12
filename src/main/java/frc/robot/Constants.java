@@ -23,10 +23,10 @@ public final class Constants {
   public static final double GYRO_kVoltsPerDegreePerSecond = 0.0128;
   
   // Motor Controllers
-  public static final int DRIVETRAIN_LEFT_FRONT = 31;//21
-  public static final int DRIVETRAIN_LEFT_BACK = 22;//22
-  public static final int DRIVETRAIN_RIGHT_FRONT = 32; //31
-  public static final int DRIVETRAIN_RIGHT_BACK = 21; //32
+  public static final int DRIVETRAIN_LEFT_FRONT = 31;
+  public static final int DRIVETRAIN_LEFT_BACK = 22;
+  public static final int DRIVETRAIN_RIGHT_FRONT = 32;
+  public static final int DRIVETRAIN_RIGHT_BACK = 21;
   public static final int SHOOTER_RIGHT_TALON = 8;
   public static final int SHOOTER_LEFT_TALON = 7;
   public static final int SHOOTER_TURRET_TALON = 5;
@@ -39,7 +39,7 @@ public final class Constants {
   public static final int SHOOTER_TOP_TALON = 20;
   public static final int SHOOTER_BOTTOM_TALON = 19;  
   public static final int QUEUING_TOP_SPARK = 17;
-  public static final int QUEUING_BOTTOM_SPARK = 18; //18
+  public static final int QUEUING_BOTTOM_SPARK = 18;
 
   // Solenoids
   //public static final int SHOOTER_SOLENOID0 = 0;
