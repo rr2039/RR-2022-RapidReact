@@ -81,12 +81,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Driver Controller
-    Trigger DRTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    //Trigger DRTrigger = new AxisButton(driverController, 3, 0.1, 0);
+    Trigger DRTrigger = new JoystickButton(driverController, 8);
     DRTrigger.onTrue(new SetShooterSpeed(m_shooter, 1150));
     DRTrigger.onFalse(new ShooterOff(m_shooter));
-    Trigger DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
+    //Trigger DLTrigger = new AxisButton(driverController, 2, 0.1, 0);
+    Trigger DLTrigger = new JoystickButton(driverController, 7);
     DLTrigger.onTrue(new ShooterSpeedFromDistance(m_shooter));
     DLTrigger.onFalse(new ShooterOff(m_shooter));
+
+    Trigger DB9 = new JoystickButton(driverController, 10);
+    DB9.onTrue(new IntakeBall(m_shooter, m_queuing));
+    DB9.onFalse(new IntakeOff(m_queuing, m_shooter));
+
     Trigger B5 = new JoystickButton(driverController, 5);
     B5.onTrue(new AutoAimAndShoot(m_shooter, m_drivetrain));
     B5.onFalse(new ShooterOff(m_shooter));
@@ -132,10 +139,12 @@ public class RobotContainer {
     Trigger B2 = new JoystickButton(operatorController, 2);
     B2.onFalse(new IntakeDown(m_shooter));
 
-    Trigger ORTrigger = new AxisButton(operatorController, 3, 0.1, 0);
+    //Trigger ORTrigger = new AxisButton(operatorController, 3, 0.1, 0);
+    Trigger ORTrigger = new JoystickButton(operatorController, 8);
     ORTrigger.onTrue(new IntakeBall(m_shooter, m_queuing));
     ORTrigger.onFalse(new IntakeOff(m_queuing, m_shooter));
-    Trigger OLTrigger = new AxisButton(operatorController, 2, 0.1, 0);
+    //Trigger OLTrigger = new AxisButton(operatorController, 2, 0.1, 0);
+    Trigger OLTrigger = new JoystickButton(operatorController, 7);
     OLTrigger.onTrue(new ExpelBall(m_shooter, m_queuing));
     OLTrigger.onFalse(new IntakeOff(m_queuing, m_shooter));
 
